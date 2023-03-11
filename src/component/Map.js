@@ -4,6 +4,7 @@ import {
   Geographies,
   Geography,
   Graticule,
+  Marker,
 } from "react-simple-maps";
 
 const geoUrl =
@@ -11,32 +12,22 @@ const geoUrl =
 
 const MapC = () => {
   const [place, setPlace] = useState(null);
+  const [coOrds, setCoOrds] = useState(null);
+  // let randomIdx;
+
   // handle click on Map
   const handleClick = (geo) => () => {
     // Set place
     setPlace(geo.properties.geounit);
+    // Set coOrdinates on Click
+    setCoOrds(geo.geometry.coordinates[0]);
     console.log("geoUnit", place);
-    // const randomIndex = Math.floor(
-    //   Math.random() * geo.geometry.coordinates[0].length
-    // );
-
     console.log(geo);
 
-    // console.log(randomIndex, "randomIndex");
-    // setGuessLocation(geo.geometry.coordinates[0][randomIndex]);
-    // console.log(guessLocation);
-    // const place = getNameFromCoords(guessLocation);
-    // place.then((val) => setPlace(val));
-    // //   setPlace(place);
-    // console.log("place", place);
-    // Find distance
-    // const distance = getDistanceFromCoords(
-    //   guessLocation[0],
-    //   guessLocation[1],
-    //   40.7128,
-    //   -74.006
-    // );
-    // console.log(distance); // Output: 4134.651220721203 km
+    // if (coOrds[1] || coOrds[0]) {
+    //   randomIdx = Math.floor(Math.random() * (coOrds[1] || coOrds[0].length));
+    // }
+    // console.log("idx", randomIdx);
   };
   return (
     <ComposableMap
@@ -62,6 +53,11 @@ const MapC = () => {
           ))
         }
       </Geographies>
+      {coOrds && (
+        <Marker coordinates={coOrds[0]}>
+          <circle r={8} fill="#F53" />
+        </Marker>
+      )}
     </ComposableMap>
   );
 };
