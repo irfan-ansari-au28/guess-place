@@ -112,13 +112,13 @@ const MapC = () => {
     // set Score
     if (!isNaN(dist)) {
       setScore(score - Math.floor(dist));
+      if (score < 100) {
+        alert("Game Over");
+      }
+      setScore(15000);
     }
-
     if (dist < 250) {
-      alert("found");
-    }
-    if (score < 100) {
-      alert("Game Over");
+      alert(`found ${place}`);
     }
   };
   return (
