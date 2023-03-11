@@ -109,8 +109,16 @@ const MapC = () => {
     setDist(dist);
     console.log("dist", dist);
 
+    // set Score
+    if (!isNaN(dist)) {
+      setScore(score - Math.floor(dist));
+    }
+
     if (dist < 250) {
       alert("found");
+    }
+    if (score < 100) {
+      alert("Game Over");
     }
   };
   return (
