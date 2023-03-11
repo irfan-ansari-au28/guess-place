@@ -10,10 +10,10 @@ import { getDistanceFromCoords } from "./utils/getDistFromCoOrds";
 
 const cities = [
   {
-    name: "Amsterdam",
+    name: "Ireland",
     position: {
-      lat: 52.370216,
-      lng: 4.895168,
+      lat: -7.24,
+      lng: 55.06,
     },
   },
   {
@@ -99,27 +99,55 @@ const MapC = () => {
     // console.log("idx", randomIdx);
     // Get Distance
     console.log(coOrds);
-    const dist = getDistanceFromCoords(
-      coOrds[0][0],
-      coOrds[0][1],
-      -7.24,
-      55.06
-    );
+    // Logic to find the nearest place
+    cities.forEach((city) => {
+      const currDist = getDistanceFromCoords(
+        coOrds[0][0],
+        coOrds[0][1],
+        city.position.lat,
+        city.position.lng
+      );
+      // if (Math.floor(currDist) < 5000) {
+      //   console.log(city, "city");
+      //   return city;
+      // }
+      setDist(currDist);
+
+      if (!isNaN(currDist)) {
+        setScore(score - Math.floor(currDist));
+        if (score < 100) {
+          alert("Game Over");
+          setScore(15000);
+        }
+
+        if (currDist < 100) {
+          console.log(currDist, "cty", city);
+          alert(`found ${city.name}`);
+        }
+      }
+    });
+
+    // const dist = getDistanceFromCoords(
+    //   coOrds[0][0],
+    //   coOrds[0][1],
+    //   -7.24,
+    //   55.06
+    // );
     // set Distance
-    setDist(dist);
-    console.log("dist", dist);
+    // setDist(dist);
+    // console.log("dist", dist);
 
     // set Score
-    if (!isNaN(dist)) {
-      setScore(score - Math.floor(dist));
-      if (score < 100) {
-        alert("Game Over");
-      }
-      setScore(15000);
-    }
-    if (dist < 250) {
-      alert(`found ${place}`);
-    }
+    // if (!isNaN(dist)) {
+    //   setScore(score - Math.floor(dist));
+    //   if (score < 100) {
+    //     alert("Game Over");
+    //   }
+    //   setScore(15000);
+    // }
+    // if (dist < 250) {
+    //   alert(`found ${place}`);
+    // }
   };
   return (
     <ComposableMap
