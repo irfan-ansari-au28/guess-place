@@ -82,6 +82,7 @@ const MapC = () => {
   const [coOrds, setCoOrds] = useState([[[11.08, 47.39]]]);
   const [score, setScore] = useState(15000);
   const [dist, setDist] = useState(0);
+  const [foundPlaces, setFoundPlaces] = useState([]);
   // let randomIdx;
 
   // handle click on Map
@@ -98,7 +99,7 @@ const MapC = () => {
     // }
     // console.log("idx", randomIdx);
     // Get Distance
-    console.log(coOrds);
+    // console.log(coOrds);
     // Logic to find the nearest place
     cities.forEach((city) => {
       const currDist = getDistanceFromCoords(
@@ -112,17 +113,20 @@ const MapC = () => {
       //   return city;
       // }
       setDist(currDist);
+      console.log(dist, "dist");
 
       if (!isNaN(currDist)) {
         setScore(score - Math.floor(currDist));
         if (score < 100) {
-          alert("Game Over");
+          console.log("GAME_OVER");
           setScore(15000);
+          return;
         }
 
         if (currDist < 100) {
-          console.log(currDist, "cty", city);
+          console.log(currDist, "currDist");
           alert(`found ${city.name}`);
+          setFoundPlaces([...foundPlaces, city]);
         }
       }
     });
@@ -185,6 +189,18 @@ const MapC = () => {
           </text>
         </Marker>
       }
+      {foundPlaces.length > 0 &&
+        foundPlaces.map((place) => (
+          <Marker
+            coordinates={[place?.position?.lat, place?.position?.lng]}
+            fill="#777"
+            key={Math.random() * 10}
+          >
+            <text textAnchor="middle" fill="#F53">
+              {place?.name}
+            </text>
+          </Marker>
+        ))}
     </ComposableMap>
   );
 };
