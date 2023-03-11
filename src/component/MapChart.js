@@ -69,7 +69,7 @@ export default function MapChart() {
       40.7128,
       -74.006
     );
-    console.log(distance); // Output: 4134.651220721203
+    console.log(distance); // Output: 4134.651220721203 km
   };
 
   return (
